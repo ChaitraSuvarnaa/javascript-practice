@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API request</title>
+  </head>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 90%;
+      height: auto;
+      margin: 25px;
+    }
+    button {
+      background-color: wheat;
+      color: #212121;
+    }
+    img {
+      width: 400px;
+      padding: 10px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <button id="fetch-profile">Fetch GitHub Profile</button>
+      <div id="profile">
+        <img
+          id="profile-photo"
+          src=""
+          alt="Profile Photo"
+          style="display: none"
+        />
+        <p id="follower-count"></p>
+      </div>
+    </div>
+
+    <script>
+      //   const requestUrl = "https://api.github.com/users/chaitraSuvarnaa";
+      //   const xhr = new XMLHttpRequest();
+      //   xhr.open("GET", requestUrl);
+      //   xhr.onreadystatechange = function () {
+      //     console.log(xhr.readyState);
+      //     if (xhr.readyState === 4) {
+      //       const data = JSON.parse(this.responseText);
+      //       console.log(typeof data);
+      //       console.log(data.followers);
+      //     }
+      //   };
+      //   xhr.send();
+
+      document
+        .getElementById("fetch-profile")
+        .addEventListener("click", function () {
+          const url = "https://api.github.com/users/chaitraSuvarnaa";
+          const xhr = new XMLHttpRequest();
+
+          xhr.open("GET", url);
+
+          xhr.onreadystatechange = function () {
+            const data = JSON.parse(xhr.responseText);
+
+            const profilePhoto = document.getElementById("profile-photo");
+            const followerCount = document.getElementById("follower-count");
+
+            profilePhoto.src = data.avatar_url;
+            profilePhoto.style.display = "block";
+            followerCount.textContent = `Followers: ${data.followers}`;
+          };
+
+          xhr.send();
+        });
+    </script>
+  </body>
+</html>
